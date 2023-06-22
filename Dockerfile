@@ -30,6 +30,9 @@ RUN yarn install && \
     yarn build
 EXPOSE 8000
 
+# Install wget
+RUN apt-get update && apt-get install -y wget
+
 # Install MySQL and create tables
 RUN wget http://repo.mysql.com/mysql-apt-config_0.8.25-1_all.deb && \
     dpkg -i mysql-apt-config_0.8.25-1_all.deb && \
@@ -41,8 +44,7 @@ COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 # Install and start Nacos
 RUN wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2.2.3.tar.gz && \
     tar -xvf nacos-server-2.2.3.tar.gz && \
-    cd /app/nacos/bin && \
-    sh startup.sh -m standalone
+    rm nacos-server-2.2.3.tar.gz
 
 # Install Java 8
 RUN apt-get update && \
