@@ -53,7 +53,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 
 # Install Node.js 16, npm, and Yarn
 RUN apt-get update && \
-    apt-get install apt-transport-https curl ca-certificates software-properties-common && \
+    apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
