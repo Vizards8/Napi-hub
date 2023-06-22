@@ -30,7 +30,7 @@ RUN wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2
     sh startup.sh -m standalone
 
 # Base image for React frontend
-FROM node:16-bullseye-slim
+FROM node:16.20-bullseye-slim
 
 # Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
