@@ -31,7 +31,7 @@ RUN yarn install && \
 EXPOSE 8000
 
 # Install MySQL and create tables
-RUN apt-get update && apt-get install -y mysql-client
+RUN apt-get update && apt-get install -y mysql-server
 COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 
 # Install and start Nacos
