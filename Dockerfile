@@ -33,9 +33,10 @@ RUN wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2
 FROM node:16.20-bullseye-slim
 
 # Install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn
+# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+#     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+#     apt-get update && apt-get install -y yarn
+RUN npm install --global yarn
 
 # Build the React frontend
 COPY napi-hub-frontend /app/napi-hub-frontend
