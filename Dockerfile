@@ -21,6 +21,8 @@ RUN cd /app/napi-common && \
 
 # Runtime stage
 FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=US/Eastern
 
 # Install MySQL and create tables
 RUN apt update && \
