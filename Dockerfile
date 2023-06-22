@@ -4,7 +4,7 @@ FROM maven:3.8.1-jdk-8-slim
 
 # Install MySQL and create tables
 RUN apt-get update && apt-get install -y mysql-client
-COPY /napi-hub-backend/sql/create_table.sql /initdb/
+COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 
 # Build and package Java projects
 COPY napi-common /app/napi-common
@@ -31,12 +31,6 @@ RUN wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2
 
 # Base image for React frontend
 FROM node:16.20-bullseye-slim
-
-# Install yarn
-# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-#     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-#     apt-get update && apt-get install -y yarn
-RUN npm install --global yarn
 
 # Build the React frontend
 COPY napi-hub-frontend /app/napi-hub-frontend
