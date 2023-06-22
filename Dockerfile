@@ -11,8 +11,8 @@ COPY napi-interface /app/napi-interface
 RUN cd /app/napi-common && \
     mvn install -DskipTests && \
     cd /app/napi-client-sdk && \
-    mvn install -DskipTests
-RUN cd /app/napi-hub-backend && \
+    mvn install -DskipTests && \
+    cd /app/napi-hub-backend && \
     mvn package -DskipTests && \
     cd /app/napi-gateway && \
     mvn package -DskipTests && \
