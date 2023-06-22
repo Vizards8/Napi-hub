@@ -23,8 +23,11 @@ RUN cd /app/napi-common && \
 FROM ubuntu:20.04
 
 # Install MySQL and create tables
-RUN apt-get update && \
-    apt-get install -y mysql-server
+RUN apt update && \
+    apt install -y mysql-server
+COPY mysql_init.sh /app/mysql_init.sh
+RUN chmod +x /app/mysql_init.sh && \
+    sh /app/mysql_init.sh
 COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 
 # Install and start Nacos
