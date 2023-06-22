@@ -9,7 +9,7 @@ import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
-import {userLogoutUsingPOST} from "@/services/yuapi-backend/userController";
+import {userLogoutUsingPOST} from "@/services/napi-hub/userController";
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;

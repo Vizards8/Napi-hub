@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { userLoginUsingPOST } from '@/services/yuapi-backend/userController';
+import { userLoginUsingPOST } from '@/services/napi-hub/userController';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';

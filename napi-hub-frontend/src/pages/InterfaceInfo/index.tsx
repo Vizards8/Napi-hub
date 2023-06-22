@@ -1,7 +1,7 @@
 import {
   getInterfaceInfoByIdUsingGET,
   invokeInterfaceInfoUsingPOST,
-} from '@/services/yuapi-backend/interfaceInfoController';
+} from '@/services/napi-hub/interfaceInfoController';
 import { useParams } from '@@/exports';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Descriptions, Divider, Form, Input, message } from 'antd';
