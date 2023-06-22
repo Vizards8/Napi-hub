@@ -51,10 +51,10 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 # Set Java executable in PATH
 ENV PATH=$PATH:$JAVA_HOME/bin
 
-# Install Node.js, npm, and Yarn
+# Install Node.js 16, npm, and Yarn
 RUN apt-get update && \
     apt-get install apt-transport-https curl ca-certificates software-properties-common && \
-    curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - && \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
     node -v && \
