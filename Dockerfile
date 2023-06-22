@@ -30,8 +30,8 @@ RUN yarn install && \
     yarn build
 EXPOSE 8000
 
-# Install wget
-RUN apt-get update && apt-get install -y wget
+# Install wget and lsb-release
+RUN apt-get update && apt-get install -y wget lsb-release
 
 # Install MySQL and create tables
 RUN wget http://repo.mysql.com/mysql-apt-config_0.8.25-1_all.deb && \
