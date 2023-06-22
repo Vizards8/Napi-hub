@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd /app/napi-hub-frontend
 yarn start &
 
 java -jar /app/napi-hub-backend/target/napi-hub-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod &

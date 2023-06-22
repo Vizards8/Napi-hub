@@ -20,25 +20,11 @@ RUN cd /app/napi-common && \
     mvn package -DskipTests
 
 # Runtime stage
-# Base image for React frontend
-FROM node:16.20-bullseye-slim
-
-# Build the React frontend
-COPY napi-hub-frontend /app/napi-hub-frontend
-WORKDIR /app/napi-hub-frontend
-RUN yarn install && \
-    yarn build
-EXPOSE 8000
-
-# Install wget, lsb-release, and gnupg
-RUN apt-get update && apt-get install -y wget lsb-release gnupg
+FROM ubuntu:20.04
 
 # Install MySQL and create tables
-RUN wget http://repo.mysql.com/mysql-apt-config_0.8.25-1_all.deb && \
-    dpkg -i mysql-apt-config_0.8.25-1_all.deb && \
-    apt-get update && \
-    apt-get install -y default-mysql-client && \
-    rm mysql-apt-config_0.8.25-1_all.deb
+RUN apt-get update && \
+    apt-get install -y mysql-server
 COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 
 # Install and start Nacos
@@ -55,6 +41,23 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 # Set Java executable in PATH
 ENV PATH=$PATH:$JAVA_HOME/bin
+
+# Install Node.js, npm, and Yarn
+RUN apt-get update && \
+    apt-get install apt-transport-https curl ca-certificates software-properties-common && \
+    curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn && \
+    node -v && \
+    npm -v && \
+    yarn -v
+
+# Build the React frontend
+COPY napi-hub-frontend /app/napi-hub-frontend
+WORKDIR /app/napi-hub-frontend
+RUN yarn install && \
+    yarn build
+EXPOSE 8000
 
 # Copy built Java artifacts from the build stage
 COPY --from=build /app/napi-hub-backend/target/napi-hub-0.0.1-SNAPSHOT.jar /app/napi-hub-0.0.1-SNAPSHOT.jar
