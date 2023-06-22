@@ -24,9 +24,13 @@ FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=US/Eastern
 
+# Install Wget
+RUN apt-get update && \
+    apt-get install -y wget
+
 # Install MySQL and create tables
-RUN apt update && \
-    apt install -y mysql-server
+RUN apt-get update && \
+    apt-get install -y mysql-server
 COPY mysql_init.sh /app/mysql_init.sh
 RUN chmod +x /app/mysql_init.sh && \
     sh /app/mysql_init.sh
