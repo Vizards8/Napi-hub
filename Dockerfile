@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -y wget lsb-release gnupg
 RUN wget http://repo.mysql.com/mysql-apt-config_0.8.25-1_all.deb && \
     dpkg -i mysql-apt-config_0.8.25-1_all.deb && \
     apt-get update && \
-    apt-get install -y mysql-server && \
+    apt-get install -y mysql-client && \
     rm mysql-apt-config_0.8.25-1_all.deb
 COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 
