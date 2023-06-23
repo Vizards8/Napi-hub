@@ -37,6 +37,7 @@ RUN chmod +x /app/mysql_init.sh && \
 COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
 
 # Install and start Nacos
+WORKDIR /app
 RUN wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2.2.3.tar.gz && \
     tar -xvf nacos-server-2.2.3.tar.gz && \
     rm nacos-server-2.2.3.tar.gz
