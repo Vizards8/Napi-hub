@@ -1,0 +1,2 @@
+# sudo docker run -d -p 3306:3306 --name mysql8 -e MYSQL_ROOT_PASSWORD=123456 -v napi-hub-backend/sql/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql mysql:8
+# size: 565M

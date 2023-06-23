@@ -1,22 +1,23 @@
 # OpenAPIHub
+> This is my personal note of how i built this project and all the technical skills I have learned during the project
 
 - [OpenAPIHub](#openapihub)
-- [Lesson 1](#lesson-1)
+- [Day 1](#day-1)
   - [Ant Design Pro init](#ant-design-pro-init)
   - [SpringBoot init](#springboot-init)
     - [修改](#修改)
     - [将DB本地数据导出为.sql文件](#将db本地数据导出为sql文件)
-- [Lesson 2](#lesson-2)
+- [Day 2](#day-2)
   - [前端](#前端)
   - [后端](#后端)
     - [开发调用接口](#开发调用接口)
     - [API 签名认证](#api-签名认证)
     - [SDK 开发](#sdk-开发)
-- [Lesson 3](#lesson-3)
+- [Day 3](#day-3)
   - [接口发布 / 下线功能](#接口发布--下线功能)
     - [后端](#后端-1)
     - [前端](#前端-1)
-- [Lesson 4](#lesson-4)
+- [Day 4](#day-4)
   - [接口调用次数统计](#接口调用次数统计)
   - [网关](#网关)
     - [路由](#路由)
@@ -36,17 +37,17 @@
     - [核心概念](#核心概念)
     - [请求流程](#请求流程)
     - [使用](#使用)
-- [Lesson 5](#lesson-5)
+- [Day 5](#day-5)
   - [应用网关特性](#应用网关特性)
   - [业务逻辑](#业务逻辑)
   - [具体实现](#具体实现)
-- [Lesson 6](#lesson-6)
+- [Day 6](#day-6)
   - [问题的提出](#问题的提出)
   - [HTTP 请求](#http-请求)
   - [RPC](#rpc)
   - [Dubbo](#dubbo)
   - [Nacos](#nacos)
-- [Lesson 7](#lesson-7)
+- [Day 7](#day-7)
   - [抽取公共项目 napi-common](#抽取公共项目-napi-common)
   - [gateway](#gateway)
   - [统计分析功能](#统计分析功能)
@@ -56,7 +57,7 @@
   - [部署](#部署)
 
 
-# Lesson 1
+# Day 1
 
 [Ant Design Pro - 官方 doc 看这个](https://pro.ant.design/docs/getting-started/)
 
@@ -111,7 +112,7 @@ pro create myapp
 * IDEA 对着 DB 右键，Export Data to File -> SQL inserts
 * 如需表结构，勾选 `Add table definition (DDL)`
 
-# Lesson 2
+# Day 2
 
 ## 前端
 
@@ -202,7 +203,7 @@ pro create myapp
 * `maven install`: 将项目的构建结果安装到本地Maven仓库
 * 在其他项目的 `pom.xml` 中通过 `<dependency>` 引入
 
-# Lesson 3
+# Day 3
 
 ## 接口发布 / 下线功能
 
@@ -247,7 +248,7 @@ pro create myapp
   * 用户测试接口固定方法名改为根据测试地址来调用
   * 模拟接口改为从数据库校验 accessKey
 
-# Lesson 4
+# Day 4
 
 ## 接口调用次数统计
 
@@ -427,7 +428,7 @@ pro create myapp
     </dependency>
     ```
 
-# Lesson 5
+# Day 5
 
 ## 应用网关特性
 
@@ -473,7 +474,7 @@ pro create myapp
   * Todo:
     * 因为已经抽成 common 项目了，所以 gateway 现阶段无法直接拷贝
 
-# Lesson 6
+# Day 6
 
 ## 问题的提出
 
@@ -514,7 +515,7 @@ pro create myapp
   * **启动项目时，Nacos 需要一直保持开启**
 * Nacos Spring Boot 快速开始: https://nacos.io/zh-cn/docs/quick-start-spring-boot.html
 
-# Lesson 7
+# Day 7
 
 ## 抽取公共项目 napi-common
 

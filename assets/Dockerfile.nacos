@@ -1,0 +1,4 @@
+# sudo docker pull nacos/nacos-server:v2.2.3
+# sudo docker run -d -p 8848:8848 --restart=always --name nacos nacos/nacos-server:v2.2.3
+# http://124.222.227.94:8848/nacos
+# Size: 814M
