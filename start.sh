@@ -12,6 +12,6 @@ nohup java -jar /app/napi-gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=pr
 echo "Starting napi-hub..."
 nohup java -jar /app/napi-hub-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod >napi-hub.out 2>&1 &
 
-echo "Starting napi-hub-frontend"
+echo "Starting napi-hub-frontend..."
 cd /app/napi-hub-frontend
 nohup yarn start >napi-hub-frontend.out 2>&1 &
