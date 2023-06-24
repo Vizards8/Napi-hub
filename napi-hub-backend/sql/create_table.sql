@@ -79,6 +79,6 @@ insert into napi.`interface_info` (`name`, `description`, `url`, `requestHeader`
 insert into napi.`interface_info` (`name`, `description`, `url`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('赖智渊', '邓志泽', 'www.emerson-mann.co', '熊明哲', '贺哲瀚', 0, '田鹏', 381422);
 insert into napi.`interface_info` (`name`, `description`, `url`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('许涛', '陆致远', 'www.vella-ankunding.name', '贾哲瀚', '莫昊焱', 0, '袁越彬', 4218096);
 insert into napi.`interface_info` (`name`, `description`, `url`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('吕峻熙', '沈鹏飞', 'www.shari-reichel.org', '郭鸿煊', '覃烨霖', 0, '熊黎昕', 493);
-insert into napi.`interface_info` (`name`, `description`, `url`, `requestParams`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('getUsernameByPost', 'Get Username by POST', 'http://localhost:8123/api/name/user', '[{"name":"username", "type": "string"}]', '{"Content-Type": "application/json"}', '{"Content-Type": "application/json"}', 1, 'POST', '1')
+insert into napi.`interface_info` (`name`, `description`, `url`, `requestParams`, `requestHeader`, `responseHeader`, `status`, `method`, `userId`) values ('getUsernameByPost', 'Get Username by POST', 'http://localhost:8123/api/name/user', '[{"name":"username", "type": "string"}]', '{"Content-Type": "application/json"}', '{"Content-Type": "application/json"}', 1, 'POST', '1');
 
-INSERT INTO napi.`user_interface_info` (`userId`, `interfaceInfoId`, `totalNum`, `leftNum`, `status`, `isDelete`) VALUES (1, 1, 5, 2, 0, 0);
+insert into napi.`user_interface_info` (`userId`, `interfaceInfoId`, `totalNum`, `leftNum`, `status`, `isDelete`) values (1, 1, 5, 999, 0, 0);
