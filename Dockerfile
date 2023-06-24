@@ -79,4 +79,4 @@ COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 # Start the project
-CMD ["sh","/app/start.sh"]
+# CMD ["sh","/app/start.sh"]
