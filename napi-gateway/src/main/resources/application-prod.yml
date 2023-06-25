@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, yupi
+      routes:
+        - id: api_route
+          uri: http://124.222.227.94:8123
+          predicates:
+            - Path=/api/**
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://124.222.227.94:8848
+
