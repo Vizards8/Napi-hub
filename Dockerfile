@@ -25,4 +25,4 @@ RUN chmod +x /app/docker_start_backend.sh
 EXPOSE 7529 8090 8123 
 
 # Start the project
-CMD ["bash","/app/docker_start_backend.sh"]
+# CMD ["bash","/app/docker_start_backend.sh"]
