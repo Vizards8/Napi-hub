@@ -1,0 +1,20 @@
+FROM node:16.20-bullseye-slim AS Build
+
+# Build the React frontend
+WORKDIR /app
+COPY . .
+RUN yarn install && \
+    yarn build
+
+FROM nginx
+
+WORKDIR /usr/share/nginx/html/
+USER root
+
+COPY ./docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=Build /app/dist  /usr/share/nginx/html/
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
