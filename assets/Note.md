@@ -55,6 +55,8 @@
     - [前端](#前端-2)
     - [后端](#后端-2)
   - [部署](#部署)
+    - [Docker compose](#docker-compose)
+    - [Dockerfile](#dockerfile)
 
 
 # Day 1
@@ -561,3 +563,15 @@ pro create myapp
   * backend 项目：web 项目，部署 spring boot 的 jar 包（对外的）
   * gateway 网关项目：web 项目，部署 spring boot 的 jar 包（对外的）
   * interface 模拟接口项目：web 项目，部署 spring boot 的 jar 包（不建议对外暴露的）
+
+### Docker compose
+
+* 编写 docker-compose.yml
+* 编写多个 Dockerfile
+* 可以统一管理，一条指令统一启动
+* 网络联通性还有待考量，localhost 会找 docker 内部的对应端口，显然找不到，只能填写具体 ip，并且打开所有端口 (3306 8848 9848 9849 8090 8123)，除了 7529不做限制(前端发送的请求都不是本机 ip )，其他可以限制为本机 ip
+
+### Dockerfile
+
+* 编写一个 Dockerfile
+* 
