@@ -4,15 +4,22 @@ set -e
 
 # Start MySQL
 echo "Starting MySQL ..."
-exec mysqld
+service mysql start
+sleep 3
+service mysql status
+echo "Complete!"
 
 # Start Nginx
 echo "Starting Nginx ..."
-exec nginx -g "daemon off;"
+service nginx start
+sleep 3
+service nginx status
+echo "Complete!"
 
 # Start Nacos
 echo "Starting Nacos ..."
 bash /app/nacos/bin/startup.sh -m standalone
+sleep 3
 
 # Start Java Projects
 echo "Starting napi-interface..."
@@ -23,9 +30,9 @@ echo "Starting napi-hub..."
 nohup java -jar /app/napi-hub-0.0.1-SNAPSHOT.jar >napi-hub.out 2>&1 &
 sleep 40
 
-echo "Starting napi-gateway..."
-nohup java -jar /app/napi-gateway-0.0.1-SNAPSHOT.jar >napi-gateway.out 2>&1 &
-sleep 40
+# echo "Starting napi-gateway..."
+# nohup java -jar /app/napi-gateway-0.0.1-SNAPSHOT.jar >napi-gateway.out 2>&1 &
+# sleep 40
 
 echo "Complete successfully!"
 
