@@ -1,8 +1,7 @@
 version: '3'
 
 services:
-  nacos-server:
-    container_name: nacos
+  nacos:
     image: nacos/nacos-server:v2.2.3
     privileged: true
     ports:
@@ -18,7 +17,6 @@ services:
       - mynet
   
   mysql:
-    container_name: mysql
     image: mysql:8
     ports:
       - 3306:3306
@@ -35,7 +33,6 @@ services:
     build:
       context: ./napi-hub-frontend
       dockerfile: Dockerfile
-    container_name: napi-hub-frontend
     image: napi-hub-frontend:v0.0.1
     links: 
       - napi-hub-backend
@@ -50,7 +47,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: napi-hub-backend
     image: napi-hub-backend:v0.0.1
     #links链接到其它服务中的容器，配置后benti-images容器就可以用mysql连接数据库，如：mysql:3306
     links: 
