@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  nacos-server:
+    image: nacos/nacos-server:v2.2.3
+    privileged: true
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
+    environment:
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - JVM_XMN=128m
+      - MODE=standalone
+    networks:
+      - mynet
+  
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - ./napi-hub-backend/sql/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+    networks:
+      - mynet
+
+  napi-hub-frontend:
+    build:
+      context: ./napi-hub-frontend
+      dockerfile: Dockerfile
+    image: napi-hub-frontend:v0.0.1
+    ports:
+      - 80:80
+    # access to bash and 否则会一直重启该容器
+    tty: true
+    networks:
+      - mynet
+
+  napi-hub-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: napi-hub-backend:v0.0.1
+    ports:
+      - 7529:7529
+      - 8090:8090
+      - 8123:8123
+    tty: true
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
