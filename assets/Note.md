@@ -573,11 +573,13 @@ pro create myapp
 
 ### Dockerfile
 
-* 编写一个 Dockerfile
+* 编写一个 Dockerfile，目前在 assets 中，记得复制到根目录
 * 复制 `nacos-server-2.2.3.tar.gz` 到根目录，从 github 下载太慢了
+* 修改前端发送请求的地址 -> http://124.222.227.94/7529，并开放 7529 端口
+* 问：为什么 docker compose，前端会自动请求 124.222.227.94
 * command：
 
 ```bash
 sudo docker build -t napi:v0.0.1 .
-sudo docker run -d -p 80:80 napi:v0.0.1
+sudo docker run -d -p 80:80 -p 7529:7529 napi:v0.0.1
 ```

@@ -1,4 +1,3 @@
-# Docker 镜像构建
 # Base image for Java projects
 FROM maven:3.8.1-jdk-8-slim
 
@@ -19,4 +18,11 @@ RUN cd /app/napi-common && \
     cd /app/napi-interface && \
     mvn package -DskipTests
 
-# Size : 775M
+# Copy the shell script
+COPY docker_start_backend.sh /app/docker_start_backend.sh
+RUN chmod +x /app/docker_start_backend.sh
+
+EXPOSE 7529 8090 8123 
+
+# Start the project
+CMD ["bash","/app/docker_start_backend.sh"]
