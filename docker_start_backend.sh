@@ -16,3 +16,5 @@ echo "Complete!"
 # echo "Complete!"
 
 echo "All projects have been started!"
+
+/bin/bash
