@@ -5,6 +5,8 @@ set -e
 # Start MySQL
 echo "Starting MySQL ..."
 service mysql start
+mysql < /app/create_table.sql
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';"
 sleep 3
 service mysql status
 echo "Complete!"
