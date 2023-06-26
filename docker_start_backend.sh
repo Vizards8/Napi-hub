@@ -17,4 +17,5 @@ echo "Complete!"
 
 echo "All projects have been started!"
 
+# 不加这一行会导致容器反复容器
 /bin/bash
