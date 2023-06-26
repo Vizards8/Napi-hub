@@ -574,4 +574,10 @@ pro create myapp
 ### Dockerfile
 
 * 编写一个 Dockerfile
-* 
+* 复制 `nacos-server-2.2.3.tar.gz` 到根目录，从 github 下载太慢了
+* command：
+
+```bash
+sudo docker build -t napi:v0.0.1 .
+sudo docker run -d -p 80:80 napi:v0.0.1
+```

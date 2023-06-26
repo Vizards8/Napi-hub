@@ -24,9 +24,9 @@ FROM node:16.20-bullseye-slim AS Build_front
 
 # Build the React frontend
 WORKDIR /app
-COPY . .
+COPY napi-hub-frontend .
 RUN yarn install && \
-    yarn Build
+    yarn build
 
 # Runtime stage
 FROM ubuntu:20.04
@@ -37,14 +37,7 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Set the root password
-RUN service mysql start \
-    && mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';" \
-    && service mysql stop
-
-# Initialize the database
-COPY napi-hub-backend/sql/create_table.sql /docker-entrypoint-initdb.d/
+COPY ./napi-hub-backend/sql/create_table.sql /app/create_table.sql
 
 # Install Java 8
 RUN apt-get update && \
@@ -60,10 +53,13 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 
 # Install Nacos
 WORKDIR /app
-RUN apt-get update && \
-    apt-get install -y wget && \
-    wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2.2.3.tar.gz && \
-    tar -xzf nacos-server-2.2.3.tar.gz && \
+# RUN apt-get update && \
+#     apt-get install -y wget && \
+#     wget https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2.2.3.tar.gz && \
+#     tar -xzf nacos-server-2.2.3.tar.gz && \
+#     rm -rf nacos-server-2.2.3.tar.gz
+COPY nacos-server-2.2.3.tar.gz .
+RUN tar -xzf nacos-server-2.2.3.tar.gz && \
     rm -rf nacos-server-2.2.3.tar.gz
 
 # Install Nginx
@@ -75,7 +71,7 @@ RUN apt-get update && \
 # Deploy frontend project
 WORKDIR /usr/share/nginx/html/
 USER root
-COPY ./napi-hub-frontend/docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./napi-hub-frontend/docker/nginx.conf /etc/nginx/sites-available/default
 COPY --from=Build_front /app/dist  /usr/share/nginx/html/
 EXPOSE 80
 
