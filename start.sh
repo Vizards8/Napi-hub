@@ -9,13 +9,6 @@ sleep 3
 service mysql status
 echo "Complete!"
 
-# Start Nginx
-echo "Starting Nginx ..."
-service nginx start
-sleep 3
-service nginx status
-echo "Complete!"
-
 # Start Nacos
 echo "Starting Nacos ..."
 bash /app/nacos/bin/startup.sh -m standalone
@@ -34,7 +27,11 @@ sleep 40
 # nohup java -jar /app/napi-gateway-0.0.1-SNAPSHOT.jar >napi-gateway.out 2>&1 &
 # sleep 40
 
+# Start Nginx
+echo "Starting Nginx ..."
+nginx -g "daemon off;"
+
 echo "Complete successfully!"
 
-# 不加这一行会导致容器反复容器
+# 不加这一行会导致容器反复重启
 /bin/bash
