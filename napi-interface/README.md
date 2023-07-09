@@ -11,7 +11,6 @@
 - GET: hello
 - GET: getQuote
 - GET: getLuckyPrediction
-- GET: getDailyWeather
 - and more in progress
 
 ## How to use?
