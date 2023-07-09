@@ -1,5 +1,9 @@
 # API Open Platform
 
+## System Architecture
+
+![System Architecture](assets/Napi-hub.png)
+
 ## How to use
 
 ### Localhost
