@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
         {
           key: 'NApi',
           title: 'NApi',
-          href: 'https://github.com/Vizards8',
+          href: 'https://124.222.227.94/napi',
           blankTarget: true,
         },
         {
@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
         {
           key: 'Neng',
           title: 'Neng',
-          href: 'https://www.linkedin.com/in/nengzhou2650/',
+          href: 'https://github.com/Vizards8',
           blankTarget: true,
         },
       ]}
