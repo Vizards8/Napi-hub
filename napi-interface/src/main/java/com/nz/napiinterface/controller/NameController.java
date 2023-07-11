@@ -49,7 +49,7 @@ public class NameController {
 //            throw new RuntimeException("无权限");
 //        }
         // todo 调用次数 + 1 invokeCount
-        String result = "POST Method: username is "+ user.getUsername();
+        String result = "POST Method Success: username is " + user.getUsername();
         return result;
     }
 }
