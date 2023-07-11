@@ -70,4 +70,22 @@ public class NApiClient {
         System.out.println(result);
         return result;
     }
+
+    public String hello() {
+        String result = HttpUtil.get(GATEWAY_HOST + "/api/hello");
+        System.out.println(result);
+        return result;
+    }
+
+    public String quote() {
+        String result = HttpUtil.get(GATEWAY_HOST + "/api/quote");
+        System.out.println(result);
+        return result;
+    }
+
+    public String lucky() {
+        String result = HttpUtil.get(GATEWAY_HOST + "/api/lucky");
+        System.out.println(result);
+        return result;
+    }
 }
