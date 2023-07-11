@@ -1,33 +1,30 @@
 import Footer from '@/components/Footer';
-import { userLoginUsingPOST } from '@/services/napi-hub/userController';
+import { userRegisterUsingPOST } from '@/services/napi-hub/userController';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
-import { Button, message, Tabs } from 'antd';
+import { LoginForm, ProFormText } from '@ant-design/pro-components';
+import { history } from '@umijs/max';
+import { Alert, message, Tabs, Button } from 'antd';
 import React, { useState } from 'react';
 import styles from './index.less';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
-  const handleSubmit = async (values: API.UserLoginRequest) => {
+  const handleSubmit = async (values: API.UserRegisterRequest) => {
     try {
-      // 登录
-      const res = await userLoginUsingPOST({
+      // 注册
+      const res = await userRegisterUsingPOST({
         ...values,
       });
       if (res.data) {
+        message.success('Register success, please log in!');
         const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
-        setInitialState({
-          loginUser: res.data,
-        });
+        history.push(urlParams.get('redirect') || '/user/login');
         return;
       }
     } catch (error) {
-      const defaultLoginFailureMessage = 'Login failed, please try again!';
+      const defaultRegisterFailureMessage = 'Register failed, please try again!';
       console.log(error);
-      message.error(defaultLoginFailureMessage);
+      message.error(defaultRegisterFailureMessage);
     }
   };
 
@@ -38,17 +35,14 @@ const Login: React.FC = () => {
           logo={<img alt="logo" src="/logo.svg" />}
           title="NApi"
           subTitle={'API Open Platform'}
-          initialValues={{
-            autoLogin: true,
-          }}
           onFinish={async (values) => {
-            await handleSubmit(values as API.UserLoginRequest);
+            await handleSubmit(values as API.UserRegisterRequest);
           }}
           submitter={{
             render: () => {
               return (
-                <Button style={{ width: '100%' }} size="large" type="primary" htmlType="submit">
-                  Log in
+                <Button style={{ width: '100%' }} size='large' type="primary" htmlType="submit">
+                  Register
                 </Button>
               );
             },
@@ -62,7 +56,7 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: 'User Login',
+                label: 'User Register',
               },
             ]}
           />
@@ -74,7 +68,7 @@ const Login: React.FC = () => {
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={'laphi'}
+              placeholder={'Account'}
               rules={[
                 {
                   required: true,
@@ -88,7 +82,7 @@ const Login: React.FC = () => {
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={'12345678'}
+              placeholder={'Password'}
               rules={[
                 {
                   required: true,
@@ -96,23 +90,28 @@ const Login: React.FC = () => {
                 },
               ]}
             />
+            <ProFormText.Password
+              name="checkPassword"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined className={styles.prefixIcon} />,
+              }}
+              placeholder={'Comfirm Password'}
+              rules={[
+                {
+                  required: true,
+                  message: 'Confirm password is required!',
+                },
+              ]}
+            />
           </>
 
           <div
             style={{
-              marginBottom: 18,
+              marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              Remember me
-            </ProFormCheckbox>
-          </div>
-          <div
-            style={{
-              marginBottom: 18,
-            }}
-          >
-            Don't have an account? <a href="/user/register">Register Now!</a>
+            Already have an account? <a href="/user/login">Log in!</a>
           </div>
         </LoginForm>
       </div>
@@ -120,4 +119,4 @@ const Login: React.FC = () => {
     </div>
   );
 };
-export default Login;
+export default Register;
