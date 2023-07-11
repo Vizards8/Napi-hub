@@ -9,6 +9,7 @@ import {getLoginUserUsingGET} from "@/services/napi-hub/userController";
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+const registerPath = '/user/register';
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
@@ -24,7 +25,10 @@ export async function getInitialState(): Promise<InitialState> {
       state.loginUser = res.data;
     }
   } catch (error) {
-    history.push(loginPath);
+    const currentPath = window.location.pathname;
+    if (currentPath !== registerPath) {
+      history.push(loginPath);
+    }
   }
   return state;
 }
