@@ -4,7 +4,10 @@ export default [
   {
     path: '/user',
     layout: false,
-    routes: [{ name: 'Login', path: '/user/login', component: './User/Login' }],
+    routes: [
+      { name: 'Login', path: '/user/login', component: './User/Login' },
+      { name: 'Register', path: '/user/register', component: './User/Register' },
+    ],
   },
   {
     path: '/admin',
