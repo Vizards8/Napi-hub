@@ -585,6 +585,7 @@ pro create myapp
 sudo docker build -t napi:v0.0.1 .
 sudo docker run -d -p 80:80 -p 7529:7529 napi:v0.0.1
 sudo docker stop <container id>
+sudo docker container prune -f
 ```
 
 ## 后续修改
