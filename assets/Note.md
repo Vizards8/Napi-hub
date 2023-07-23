@@ -57,6 +57,8 @@
   - [部署](#部署)
     - [Docker compose](#docker-compose)
     - [Dockerfile](#dockerfile)
+  - [后续修改](#后续修改)
+    - [添加模拟接口](#添加模拟接口)
 
 
 # Day 1
@@ -583,3 +585,10 @@ pro create myapp
 sudo docker build -t napi:v0.0.1 .
 sudo docker run -d -p 80:80 -p 7529:7529 napi:v0.0.1
 ```
+
+## 后续修改
+
+### 添加模拟接口
+
+* 在 Napiclient 中添加，记得不论是 POST 还是 GET，都要添加 getHeaderMap，否则 gateway 校验不通过
+* 登录失败，看看账号的 is_delete 是否为1

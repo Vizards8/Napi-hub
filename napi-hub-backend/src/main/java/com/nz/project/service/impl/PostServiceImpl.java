@@ -38,16 +38,16 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             }
         }
         if (StringUtils.isNotBlank(content) && content.length() > 8192) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "内容过长");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Content is too long.");
         }
         if (reviewStatus != null && !PostReviewStatusEnum.getValues().contains(reviewStatus)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         if (age != null && (age < 18 || age > 100)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "年龄不符合要求");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The age does not meet the requirements.");
         }
         if (gender != null && !PostGenderEnum.getValues().contains(gender)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "性别不符合要求");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Gender does not meet the requirements.");
         }
     }
 }

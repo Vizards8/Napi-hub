@@ -5,6 +5,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseint = {
+    code?: number;
+    data?: number;
+    message?: string;
+  };
+
   type BaseResponseInterfaceInfo = {
     code?: number;
     data?: InterfaceInfo;
@@ -115,6 +121,10 @@ declare namespace API {
     id?: number;
   };
 
+  type getRemainingCallsUsingGETParams = {
+    id?: number;
+  };
+
   type getUserByIdUsingGETParams = {
     /** id */
     id?: number;
@@ -222,51 +232,47 @@ declare namespace API {
   };
 
   type listPostByPageUsingGETParams = {
-    age?: number;
-    contact?: string;
     content?: string;
     current?: number;
-    education?: string;
-    gender?: number;
-    job?: string;
-    loveExp?: string;
+    favourUserId?: number;
+    id?: number;
+    notId?: number;
+    orTags?: string[];
     pageSize?: number;
-    place?: string;
-    reviewStatus?: number;
+    searchText?: string;
     sortField?: string;
     sortOrder?: string;
+    tags?: string[];
+    title?: string;
     userId?: number;
   };
 
   type listPostUsingGETParams = {
-    age?: number;
-    contact?: string;
     content?: string;
     current?: number;
-    education?: string;
-    gender?: number;
-    job?: string;
-    loveExp?: string;
+    favourUserId?: number;
+    id?: number;
+    notId?: number;
+    orTags?: string[];
     pageSize?: number;
-    place?: string;
-    reviewStatus?: number;
+    searchText?: string;
     sortField?: string;
     sortOrder?: string;
+    tags?: string[];
+    title?: string;
     userId?: number;
   };
 
   type listUserByPageUsingGETParams = {
-    createTime?: string;
     current?: number;
-    gender?: number;
     id?: number;
+    mpOpenId?: string;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
-    updateTime?: string;
-    userAccount?: string;
-    userAvatar?: string;
+    unionId?: string;
     userName?: string;
+    userProfile?: string;
     userRole?: string;
   };
 
@@ -297,17 +303,15 @@ declare namespace API {
   };
 
   type listUserUsingGETParams = {
-    createTime?: string;
     current?: number;
-    gender?: number;
     id?: number;
+    mpOpenId?: string;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
-    updateTime?: string;
-    userAccount?: string;
-    userAvatar?: string;
+    unionId?: string;
     userName?: string;
+    userProfile?: string;
     userRole?: string;
   };
 
@@ -468,30 +472,16 @@ declare namespace API {
   };
 
   type PostAddRequest = {
-    age?: number;
-    contact?: string;
     content?: string;
-    education?: string;
-    gender?: number;
-    job?: string;
-    loveExp?: string;
-    photo?: string;
-    place?: string;
+    tags?: string[];
+    title?: string;
   };
 
   type PostUpdateRequest = {
-    age?: number;
-    contact?: string;
     content?: string;
-    education?: string;
-    gender?: number;
     id?: number;
-    job?: string;
-    loveExp?: string;
-    photo?: string;
-    place?: string;
-    reviewMessage?: string;
-    reviewStatus?: number;
+    tags?: string[];
+    title?: string;
   };
 
   type User = {
@@ -510,11 +500,9 @@ declare namespace API {
   };
 
   type UserAddRequest = {
-    gender?: number;
     userAccount?: string;
     userAvatar?: string;
     userName?: string;
-    userPassword?: string;
     userRole?: string;
   };
 
@@ -556,23 +544,19 @@ declare namespace API {
   };
 
   type UserUpdateRequest = {
-    gender?: number;
     id?: number;
-    userAccount?: string;
     userAvatar?: string;
     userName?: string;
-    userPassword?: string;
+    userProfile?: string;
     userRole?: string;
   };
 
   type UserVO = {
     createTime?: string;
-    gender?: number;
     id?: number;
-    updateTime?: string;
-    userAccount?: string;
     userAvatar?: string;
     userName?: string;
+    userProfile?: string;
     userRole?: string;
   };
 

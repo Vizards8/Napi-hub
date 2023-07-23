@@ -1,25 +1,20 @@
-import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
-import {
-  FooterToolbar,
-  PageContainer,
-  ProDescriptions,
-  ProTable,
-} from '@ant-design/pro-components';
-import '@umijs/max';
-import { Button, Drawer, message } from 'antd';
-import React, { useRef, useState } from 'react';
-import type { SortOrder } from 'antd/es/table/interface';
+import CreateModal from '@/pages/Admin/InterfaceInfo/components/CreateModal';
+import UpdateModal from '@/pages/Admin/InterfaceInfo/components/UpdateModal';
 import {
   addInterfaceInfoUsingPOST,
   deleteInterfaceInfoUsingPOST,
   listInterfaceInfoByPageUsingGET,
   offlineInterfaceInfoUsingPOST,
   onlineInterfaceInfoUsingPOST,
-  updateInterfaceInfoUsingPOST
+  updateInterfaceInfoUsingPOST,
 } from '@/services/napi-hub/interfaceInfoController';
-import CreateModal from '@/pages/Admin/InterfaceInfo/components/CreateModal';
-import UpdateModal from "@/pages/Admin/InterfaceInfo/components/UpdateModal";
+import { PlusOutlined } from '@ant-design/icons';
+import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
+import { PageContainer, ProDescriptions, ProTable } from '@ant-design/pro-components';
+import '@umijs/max';
+import { Button, Drawer, message } from 'antd';
+import type { SortOrder } from 'antd/es/table/interface';
+import React, { useRef, useState } from 'react';
 
 const TableList: React.FC = () => {
   /**
@@ -43,18 +38,18 @@ const TableList: React.FC = () => {
    * @param fields
    */
   const handleAdd = async (fields: API.InterfaceInfo) => {
-    const hide = message.loading('正在添加');
+    const hide = message.loading('Adding...');
     try {
       await addInterfaceInfoUsingPOST({
         ...fields,
       });
       hide();
-      message.success('创建成功');
+      message.success('Create successful');
       handleModalVisible(false);
       return true;
     } catch (error: any) {
       hide();
-      message.error('创建失败，' + error.message);
+      message.error('Create failed, ' + error.message);
       return false;
     }
   };
@@ -65,22 +60,22 @@ const TableList: React.FC = () => {
    *
    * @param fields
    */
-  const handleUpdate = async (fields:  API.InterfaceInfo) => {
+  const handleUpdate = async (fields: API.InterfaceInfo) => {
     if (!currentRow) {
       return;
     }
-    const hide = message.loading('修改中');
+    const hide = message.loading('Updating...');
     try {
       await updateInterfaceInfoUsingPOST({
         id: currentRow.id,
-        ...fields
+        ...fields,
       });
       hide();
-      message.success('操作成功');
+      message.success('Update successful');
       return true;
     } catch (error: any) {
       hide();
-      message.error('操作失败，' + error.message);
+      message.error('Update failed, ' + error.message);
       return false;
     }
   };
@@ -91,19 +86,19 @@ const TableList: React.FC = () => {
    * @param record
    */
   const handleOnline = async (record: API.IdRequest) => {
-    const hide = message.loading('发布中');
+    const hide = message.loading('Publishing...');
     if (!record) return true;
     try {
       await onlineInterfaceInfoUsingPOST({
-        id: record.id
+        id: record.id,
       });
       hide();
-      message.success('操作成功');
+      message.success('Publish successful');
       actionRef.current?.reload();
       return true;
     } catch (error: any) {
       hide();
-      message.error('操作失败，' + error.message);
+      message.error('Publish failed, ' + error.message);
       return false;
     }
   };
@@ -114,19 +109,19 @@ const TableList: React.FC = () => {
    * @param record
    */
   const handleOffline = async (record: API.IdRequest) => {
-    const hide = message.loading('发布中');
+    const hide = message.loading('Offline in progress...');
     if (!record) return true;
     try {
       await offlineInterfaceInfoUsingPOST({
-        id: record.id
+        id: record.id,
       });
       hide();
-      message.success('操作成功');
+      message.success('Offline successful');
       actionRef.current?.reload();
       return true;
     } catch (error: any) {
       hide();
-      message.error('操作失败，' + error.message);
+      message.error('Offline failed, ' + error.message);
       return false;
     }
   };
@@ -138,19 +133,19 @@ const TableList: React.FC = () => {
    * @param record
    */
   const handleRemove = async (record: API.InterfaceInfo) => {
-    const hide = message.loading('正在删除');
+    const hide = message.loading('Deleting...');
     if (!record) return true;
     try {
       await deleteInterfaceInfoUsingPOST({
-        id: record.id
+        id: record.id,
       });
       hide();
-      message.success('删除成功');
+      message.success('Delete successful');
       actionRef.current?.reload();
       return true;
     } catch (error: any) {
       hide();
-      message.error('删除失败，' + error.message);
+      message.error('Delete failed, ' + error.message);
       return false;
     }
   };
@@ -162,101 +157,107 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<API.InterfaceInfo>[] = [
     {
-      title: '接口名称',
+      title: 'API name',
       dataIndex: 'name',
       valueType: 'text',
       formItemProps: {
-        rules: [{
-          required: true,
-        }]
-      }
+        rules: [
+          {
+            required: true,
+          },
+        ],
+      },
     },
     {
-      title: '描述',
+      title: 'Description',
       dataIndex: 'description',
       valueType: 'textarea',
     },
     {
-      title: '请求方法',
+      title: 'Request Method',
       dataIndex: 'method',
       valueType: 'text',
     },
     {
-      title: 'url',
+      title: 'Request URL',
       dataIndex: 'url',
       valueType: 'text',
     },
     {
-      title: '请求参数',
+      title: 'Request Parameters',
       dataIndex: 'requestParams',
       valueType: 'jsonCode',
     },
     {
-      title: '请求头',
+      title: 'Request Headers',
       dataIndex: 'requestHeader',
       valueType: 'jsonCode',
     },
     {
-      title: '响应头',
+      title: 'Response Headers',
       dataIndex: 'responseHeader',
       valueType: 'jsonCode',
     },
     {
-      title: '状态',
+      title: 'API Status',
       dataIndex: 'status',
       hideInForm: true,
       valueEnum: {
         0: {
-          text: '关闭',
+          text: 'Offline',
           status: 'Default',
         },
         1: {
-          text: '开启',
+          text: 'Online',
           status: 'Processing',
         },
       },
     },
     {
-      title: '操作',
+      title: 'Actions',
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
         <a
-          key="config"
+          key="edit"
           onClick={() => {
             handleUpdateModalVisible(true);
             setCurrentRow(record);
           }}
         >
-          修改
+          Edit
         </a>,
-        record.status === 0 ? <a
-          key="config"
-          onClick={() => {
-            handleOnline(record);
-          }}
-        >
-          发布
-        </a> : null,
-        record.status === 1 ? <Button
-          type="text"
-          key="config"
-          danger
-          onClick={() => {
-            handleOffline(record);
-          }}
-        >
-          下线
-        </Button> : null,
+        record.status === 0 ? (
+          <a
+            key="publish"
+            onClick={() => {
+              handleOnline(record);
+            }}
+          >
+            Pulish
+          </a>
+        ) : null,
+        record.status === 1 ? (
+          <Button
+            type="text"
+            key="offline"
+            danger
+            onClick={() => {
+              handleOffline(record);
+            }}
+          >
+            Offline
+          </Button>
+        ) : null,
         <Button
           type="text"
-          key="config"
+          key="delete"
           danger
           onClick={() => {
             handleRemove(record);
           }}
         >
-          删除
+          Delete
         </Button>,
       ],
     },
@@ -265,11 +266,21 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<API.RuleListItem, API.PageParams>
-        headerTitle={'查询表格'}
+        headerTitle={'API Table'}
         actionRef={actionRef}
         rowKey="key"
-        search={{
-          labelWidth: 120,
+        // search={{
+        //   labelWidth: 120,
+        //   searchText: 'Search',
+        //   resetText: 'Reset',
+        // }}
+        search={false}
+        scroll={{
+          x: 1800,
+        }}
+        pagination={{
+          pageSize: 5,
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
         }}
         toolBarRender={() => [
           <Button
@@ -279,7 +290,7 @@ const TableList: React.FC = () => {
               handleModalVisible(true);
             }}
           >
-            <PlusOutlined /> 新建
+            <PlusOutlined /> New
           </Button>,
         ]}
         request={async (
@@ -311,7 +322,7 @@ const TableList: React.FC = () => {
           },
         }}
       />
-      {selectedRowsState?.length > 0 && (
+      {/* {selectedRowsState?.length > 0 && (
         <FooterToolbar
           extra={
             <div>
@@ -341,7 +352,7 @@ const TableList: React.FC = () => {
           </Button>
           <Button type="primary">批量审批</Button>
         </FooterToolbar>
-      )}
+      )} */}
       <UpdateModal
         columns={columns}
         onSubmit={async (value) => {

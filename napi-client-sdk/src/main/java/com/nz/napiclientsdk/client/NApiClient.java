@@ -72,19 +72,81 @@ public class NApiClient {
     }
 
     public String hello() {
-        String result = HttpUtil.get(GATEWAY_HOST + "/api/hello");
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/hello")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public String hello1() {
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/hello1")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public String hello2() {
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/hello2")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public String hello3() {
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/hello3")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public String hello4() {
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/hello4")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
+        System.out.println(result);
+        return result;
+    }
+
+    public String hello5() {
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/hello5")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
         System.out.println(result);
         return result;
     }
 
     public String quote() {
-        String result = HttpUtil.get(GATEWAY_HOST + "/api/quote");
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/quote")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
         System.out.println(result);
         return result;
     }
 
     public String lucky() {
-        String result = HttpUtil.get(GATEWAY_HOST + "/api/lucky");
+        HttpResponse httpResponse = HttpRequest.get(GATEWAY_HOST + "/api/lucky")
+                .addHeaders(getHeaderMap(""))
+                .execute();
+        System.out.println(httpResponse.getStatus());
+        String result = httpResponse.body();
         System.out.println(result);
         return result;
     }

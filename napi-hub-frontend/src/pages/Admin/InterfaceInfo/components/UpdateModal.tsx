@@ -32,6 +32,7 @@ const UpdateModal: React.FC<Props> = (props) => {
         onSubmit={async (value) => {
           onSubmit?.(value);
         }}
+        submitter={false}
       />
     </Modal>
   );

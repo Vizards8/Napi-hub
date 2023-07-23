@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.nz.napiclientsdk.client.NApiClient;
 import com.nz.napicommon.model.entity.InterfaceInfo;
 import com.nz.napicommon.model.entity.User;
+import com.nz.napicommon.model.entity.UserInterfaceInfo;
 import com.nz.project.annotation.AuthCheck;
 import com.nz.project.common.*;
 import com.nz.project.constant.CommonConstant;
@@ -17,6 +18,7 @@ import com.nz.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.nz.project.model.enums.InterfaceInfoStatusEnum;
 import com.nz.project.service.InterfaceInfoService;
 import com.nz.project.service.UserService;
+import com.nz.project.service.UserInterfaceInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +40,9 @@ public class InterfaceInfoController {
 
     @Resource
     private InterfaceInfoService interfaceInfoService;
+
+    @Resource
+    private UserInterfaceInfoService userInterfaceInfoService;
 
     @Resource
     private UserService userService;
@@ -225,7 +230,7 @@ public class InterfaceInfoController {
         user.setUsername("test");
         String username = nApiClient.getUsernameByPost(user);
         if (StringUtils.isBlank(username)) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口验证失败");
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "API validation failed.");
         }
         // 仅本人或管理员可修改
         InterfaceInfo interfaceInfo = new InterfaceInfo();
@@ -286,7 +291,7 @@ public class InterfaceInfoController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         if (oldInterfaceInfo.getStatus() != InterfaceInfoStatusEnum.ONLINE.getValue()) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口未开启");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "API not enabled");
         }
         User loginUser = userService.getLoginUser(request);
         String accessKey = loginUser.getAccessKey();
@@ -336,5 +341,79 @@ public class InterfaceInfoController {
             log.error("反射调用参数错误", e);
         }
         return result;
+    }
+
+    /**
+     * 订阅接口
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/subscribe")
+    public BaseResponse<Boolean> subscribeInterface(@RequestBody IdRequest idRequest,
+                                                    HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+
+        // 判断是否存在
+        long id = idRequest.getId();
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        User loginUser = userService.getLoginUser(request);
+        UserInterfaceInfo userInterfaceInfo = new UserInterfaceInfo();
+        userInterfaceInfo.setUserId(loginUser.getId());
+        userInterfaceInfo.setInterfaceInfoId(id);
+        userInterfaceInfo.setLeftNum(999);
+
+        // 已订阅的用户不得重复订阅
+        QueryWrapper<UserInterfaceInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userId", userInterfaceInfo.getUserId());
+        queryWrapper.eq("interfaceInfoId", userInterfaceInfo.getInterfaceInfoId());
+        long count = userInterfaceInfoService.count(queryWrapper);
+        if (count > 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "已订阅");
+        }
+
+        // 校验
+        userInterfaceInfoService.validUserInterfaceInfo(userInterfaceInfo, true);
+        boolean result = userInterfaceInfoService.save(userInterfaceInfo);
+        if (!result) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR);
+        }
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 查询接口剩余次数
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @GetMapping("/getRemainingCalls")
+    public BaseResponse<Integer> getRemainingCalls(IdRequest idRequest, HttpServletRequest request) {
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+
+        // 查库是否存在，判断是否为第一次调用
+        long interfaceId = idRequest.getId();
+        User loginUser = userService.getLoginUser(request);
+        QueryWrapper<UserInterfaceInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("interfaceInfoId", interfaceId);
+        queryWrapper.eq("userId", loginUser.getId());
+        UserInterfaceInfo userInterfaceInfo = userInterfaceInfoService.getOne(queryWrapper);
+        if (userInterfaceInfo == null) {
+            return ResultUtils.success(null);
+        }
+
+        // 不是第一次调用
+        Integer result = userInterfaceInfo.getLeftNum();
+        return ResultUtils.success(result);
     }
 }

@@ -21,10 +21,9 @@ const Register: React.FC = () => {
         history.push(urlParams.get('redirect') || '/user/login');
         return;
       }
-    } catch (error) {
-      const defaultRegisterFailureMessage = 'Register failed, please try again!';
+    } catch (error: any) {
       console.log(error);
-      message.error(defaultRegisterFailureMessage);
+      message.error(error.message);
     }
   };
 

@@ -47,6 +47,21 @@ export async function getInterfaceInfoByIdUsingGET(
   });
 }
 
+/** getRemainingCalls GET /api/interfaceInfo/getRemainingCalls */
+export async function getRemainingCallsUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getRemainingCallsUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseint>('/api/interfaceInfo/getRemainingCalls', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** invokeInterfaceInfo POST /api/interfaceInfo/invoke */
 export async function invokeInterfaceInfoUsingPOST(
   body: API.InterfaceInfoInvokeRequest,
@@ -113,6 +128,21 @@ export async function onlineInterfaceInfoUsingPOST(
   options?: { [key: string]: any },
 ) {
   return request<API.BaseResponseboolean>('/api/interfaceInfo/online', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** subscribeInterface POST /api/interfaceInfo/subscribe */
+export async function subscribeInterfaceUsingPOST(
+  body: API.IdRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseboolean>('/api/interfaceInfo/subscribe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
